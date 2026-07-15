@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿const Task = require('../models/Task');
+=======
+const Task = require('../models/Task');
+const Submission = require('../models/Submission');
+>>>>>>> 61eeb18 (Complete)
 
 // @desc  Get all tasks
 // @route GET /api/tasks
@@ -83,7 +88,13 @@ const deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) return res.status(404).json({ message: 'Task not found' });
+<<<<<<< HEAD
     // — orphaned Submission documents remain in DB after task deletion
+=======
+    
+    // Cascade delete submissions related to this task
+    await Submission.deleteMany({ taskId: req.params.id });
+>>>>>>> 61eeb18 (Complete)
     await Task.findByIdAndDelete(req.params.id);
 
     res.json({ message: 'Task deleted' });

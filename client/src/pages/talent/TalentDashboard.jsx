@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import TalentSidebar from '../../components/talent/TalentSidebar';
 import AvailableTasksList from '../../components/talent/AvailableTasksList';
 import MyTasksList from '../../components/talent/MyTasksList';
+<<<<<<< HEAD
+=======
+import OnboardingWizard from '../../components/talent/OnboardingWizard';
+>>>>>>> 61eeb18 (Complete)
 import { fetchAvailableTasks, fetchMyTasks } from '../../api/talent';
 import { useAuth } from '../../context/AuthContext';
 
@@ -12,6 +16,10 @@ const TalentDashboard = () => {
   const [availableTasks, setAvailableTasks] = useState([]);
   const [myTasks, setMyTasks]               = useState([]);
   const [error, setError] = useState(null);
+<<<<<<< HEAD
+=======
+  const [showOnboarding, setShowOnboarding] = useState(false);
+>>>>>>> 61eeb18 (Complete)
 
   const loadAvailable = async () => {
     try { const { data } = await fetchAvailableTasks(); setAvailableTasks(data); }
@@ -24,7 +32,18 @@ const TalentDashboard = () => {
   };
 
   // eslint-disable-next-line
+<<<<<<< HEAD
   useEffect(() => { loadAvailable(); loadMyTasks(); }, []);
+=======
+  useEffect(() => {
+    loadAvailable();
+    loadMyTasks();
+    const completed = localStorage.getItem('onboarding_completed');
+    if (!completed) {
+      setShowOnboarding(true);
+    }
+  }, []);
+>>>>>>> 61eeb18 (Complete)
   const handleRefresh = () => { loadAvailable(); loadMyTasks(); };
 
   return (
@@ -89,6 +108,13 @@ const TalentDashboard = () => {
           <MyTasksList tasks={myTasks} onRefresh={handleRefresh} />
         </section>
       </main>
+<<<<<<< HEAD
+=======
+
+      {showOnboarding && (
+        <OnboardingWizard onClose={() => setShowOnboarding(false)} />
+      )}
+>>>>>>> 61eeb18 (Complete)
     </div>
   );
 };

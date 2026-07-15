@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿const Submission = require('../models/Submission');
+=======
+const Submission = require('../models/Submission');
+>>>>>>> 61eeb18 (Complete)
 const Task = require('../models/Task');
 
 // @desc  Submit a task with a file upload
@@ -96,8 +100,16 @@ const reviewSubmission = async (req, res) => {
     if (!submission) {
       return res.status(404).json({ message: 'Submission not found' });
     }
+<<<<<<< HEAD
     // — task stays 'Submitted' even after the submission is Approved/Rejected
     // Proper flow: also update Task.status to 'Approved'/'Rejected'
+=======
+    
+    // Also update Task.status to 'Approved'/'Rejected'
+    if (submission.taskId) {
+      await Task.findByIdAndUpdate(submission.taskId._id || submission.taskId, { status: reviewStatus });
+    }
+>>>>>>> 61eeb18 (Complete)
 
     res.json(submission);
   } catch (error) {
@@ -105,4 +117,23 @@ const reviewSubmission = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 module.exports = { submitTask, getSubmission, getAllSubmissions, reviewSubmission };
+=======
+// @desc  Get logged-in talent's submissions
+// @route GET /api/submissions/talent/mine
+// @access Talent
+const getMySubmissions = async (req, res) => {
+  try {
+    const submissions = await Submission.find({ talentId: req.user._id })
+      .populate('taskId', 'title description status dueDate')
+      .sort({ createdAt: -1 });
+
+    res.json(submissions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { submitTask, getSubmission, getAllSubmissions, reviewSubmission, getMySubmissions };
+>>>>>>> 61eeb18 (Complete)

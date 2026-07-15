@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿require('dotenv').config();
+=======
+require('dotenv').config();
+>>>>>>> 61eeb18 (Complete)
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
@@ -24,8 +28,17 @@ app.use('/api/users', userRoutes);
 app.use('/api/talent', talentRoutes);
 app.use('/api/submissions', submissionRoutes);
 
+<<<<<<< HEAD
 // Health check
 app.get('/', (req, res) => res.send('Task Pipeline API is running...'));
+=======
+// Global error handler
+app.use((err, req, res, next) => {
+  const isUploadRejection = err.message && err.message.includes('File upload rejected');
+  const status = isUploadRejection ? 400 : (err.status || 500);
+  res.status(status).json({ message: err.message || 'Internal Server Error' });
+});
+>>>>>>> 61eeb18 (Complete)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
